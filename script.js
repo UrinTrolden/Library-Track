@@ -12,9 +12,16 @@ function Book(title, author, pages, read) {
 const hobbit = new Book("Hobbit","Tolkien","200","read")
 
 const ass = new Book("ass eating","papa frank","69","read")
+const ass2 = new Book("ass eating2","papa frank","69","read")
 
 myLibrary.push(hobbit)
 myLibrary.push(ass)
+myLibrary.push(ass2)
+myLibrary.push(ass2)
+myLibrary.push(ass2)
+myLibrary.push(ass2)
+
+
 
 console.log(myLibrary)
 
