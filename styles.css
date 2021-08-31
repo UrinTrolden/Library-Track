@@ -1,6 +1,44 @@
-.books {
+.sidebar {
+  width: 20vw;
+  height: 100vh;
+  position: fixed;
+  right: 0px;
+  background-color: black;
+  top: 0; /* Stay at the top */
+}
+
+#bartitle {
+  color: lightgrey;
+  font-size: 2.5vw;
+  text-align: center;
+}
+
+.maincontainer {
+  position: fixed;
+  height: 100vh;
+  width: 80vw;
+  left: 0px;
+  top: 0; /* Stay at the top */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  margin-right: 20vw;
+  background-color: yellow;
+}
+
+.bookshelf {
   display: grid;
-  width: 300px;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-auto-rows: 300px;
+  grid-auto-flow: row;
+  gap: 20px;
+}
+
+.books {
+  width: 200px;
   height: 300px;
   border: 5px solid rgb(0, 0, 0);
+  background-color: grey;
 }
