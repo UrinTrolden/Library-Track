@@ -3,16 +3,20 @@ const bookform = document.getElementById("bookform");
 
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, id) {
   this.title = title,
   this.author = author,
   this.pages = pages,
-  this.read = read
+  this.read = read,
+  this.id = id
 }
 
-const hobbit = new Book("Hobbit","Tolkien","200","read")
+let bookIdCount = 0;
 
-console.log(myLibrary)
+function bookIdCreator() {
+  return ++bookIdCount;
+}
+
 
 function addBookToLibrary() {
   // do stuff here
@@ -21,6 +25,11 @@ function addBookToLibrary() {
 //function that displays each book on the dom.
 function libraryDisplay() {
     
+  //removes all existing books so there won't be duplicates
+  while (bookshelf.firstChild) {
+    bookshelf.removeChild(bookshelf.lastChild);
+  }
+  
   myLibrary = myLibrary.filter(function(item, pos) {
     return myLibrary.indexOf(item) == pos;
   })
@@ -55,9 +64,13 @@ bookform.addEventListener("submit", (e) => {
   let bookRead = bookform.querySelector('input[id="read"]').checked;
   if(bookRead) {
     bookRead = "Read.";
-  } else bookRead = "Not read.";
-  myLibrary.push(new Book(bookTitle, bookAuthor, bookPages, bookRead));
+  } else {
+    bookRead = "Not read.";
+  }
+  let bookId = bookIdCreator();
+  myLibrary.push(new Book(bookTitle, bookAuthor, bookPages, bookRead, bookId));
   libraryDisplay();
+  console.log(myLibrary)
 })
 
 
