@@ -25,7 +25,7 @@ label {
   top: 0; /* Stay at the top */
   overflow-x: hidden; /* Disable horizontal scroll */
   margin-right: 20vw;
-  background-color: yellow;
+  background-color: lightslategray;
 }
 
 .bookshelf {
