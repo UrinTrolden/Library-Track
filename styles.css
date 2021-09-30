@@ -46,3 +46,13 @@ label {
   border: 5px solid rgb(0, 0, 0);
   background-color: grey;
 }
+
+.books .booktitle {
+  font-size:3vmax;
+  max-height: 100px;
+}
+
+
+img {
+  border-radius: 50%;
+}
