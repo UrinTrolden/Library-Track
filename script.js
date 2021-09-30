@@ -1,6 +1,6 @@
 const bookshelf = document.getElementById("bookshelf");
 const bookform = document.getElementById("bookform");
-const pageread = document.getElementById("pageread");
+const pagesread = document.getElementById("pagesread");
 
 let pagereadNum = 0;
 let myLibrary = [];
@@ -56,12 +56,13 @@ function libraryDisplay() {
         bookRemove.innerText = "Remove book";
         bookRemove.id = "bookremove";
         newBook.appendChild(bookRemove).className = "bookremove"; 
-
-        if ((book.id == bookIdCount) && (book.pages > 0)) {
-          pagereadNum += parseInt(book.pages);
-          console.log(pagereadNum)
-        }
+        //add change read status
+        let bookChangeRead = document.createElement("button");
+        bookChangeRead.innerText = "Change read status";
+        bookChangeRead.id = "changeread";
+        newBook.appendChild(bookChangeRead).className = "changeread"; 
     });
+    pagesread.innerText = pagereadNum;
 }
 
 bookform.addEventListener("submit", (e) => {
@@ -70,11 +71,18 @@ bookform.addEventListener("submit", (e) => {
   let bookAuthor = bookform.querySelector('input[id="author"]').value;
   let bookPages = bookform.querySelector('input[id="pages"]').value;
   let bookRead = bookform.querySelector('input[id="read"]').checked;
-  if(bookRead) {
-    bookRead = "Read.";
-  } else {
-    bookRead = "Not read.";
+  console.log(bookform.querySelector('input[id="pages"]').value)
+  
+  if (bookPages > 0 && bookRead) {
+    pagereadNum += Number(bookPages);
   }
+
+  if(bookRead) {
+    bookRead = "Read. ✅";
+  } else {
+    bookRead = "Not read. ❌";
+  }
+
   let bookId = bookIdCreator();
   myLibrary.push(new Book(bookTitle, bookAuthor, bookPages, bookRead, bookId));
   libraryDisplay();
@@ -82,17 +90,32 @@ bookform.addEventListener("submit", (e) => {
 });
 
 
-//eventlistener for removing books
+//eventlistener for removing books and change read status
 addEventListener("click", function(e){
+  
+  let myLibIndex = myLibrary.findIndex((num) => num.id == e.target.parentNode.id);
+
   if (e.target && e.target.classList.contains("bookremove")) {
     console.log("jeff");
     
-    pagereadNum -= parseInt(myLibrary[e.target.id].pages);
-    console.log(pagereadNum)
+    if (e.target.parentNode.childNodes[3].innerText == "Read. ✅") {
+      pagereadNum -= e.target.parentNode.childNodes[2].innerText;
+    }
     
-    const index = Number(e.target.id.slice(-1));
-    myLibrary.splice(index, 1);
+    myLibrary.splice(myLibIndex, 1);
 
+
+    libraryDisplay();
+  }
+  
+  if (e.target && e.target.classList.contains("changeread")) {
+    if (e.target.parentNode.childNodes[3].innerText == "Read. ✅") {
+      myLibrary[myLibIndex].read = "Not read. ❌";
+      pagereadNum -= Number(e.target.parentNode.childNodes[2].innerText);     
+    } else {
+      myLibrary[myLibIndex].read = "Read. ✅";
+      pagereadNum += Number(e.target.parentNode.childNodes[2].innerText);  
+    }
 
     libraryDisplay();
   }
