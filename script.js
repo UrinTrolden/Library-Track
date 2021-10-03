@@ -2,8 +2,30 @@ const bookshelf = document.getElementById("bookshelf");
 const bookform = document.getElementById("bookform");
 const pagesread = document.getElementById("pagesread");
 
+
+
 let pagereadNum = 0;
 let myLibrary = [];
+
+if (!localStorage.getItem('storedLib')) {
+  populateStorage()
+  console.log('populate storage')
+} else {
+  setStyles();
+  console.log('set styles')
+}
+
+function populateStorage() {
+  localStorage.setItem('storedLib', JSON.stringify(myLibrary));
+  setStyles()
+}
+
+function setStyles() {
+  myLibrary = JSON.parse(localStorage.getItem('storedLib'));
+  libraryDisplay() 
+}
+
+
 
 function Book(title, author, pages, read, id) {
   this.title = title,
@@ -63,6 +85,7 @@ function libraryDisplay() {
         newBook.appendChild(bookChangeRead).className = "changeread"; 
     });
     pagesread.innerText = pagereadNum;
+    localStorage.setItem('storedLib', JSON.stringify(myLibrary));
 }
 
 bookform.addEventListener("submit", (e) => {
