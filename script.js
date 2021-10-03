@@ -17,13 +17,14 @@ if (!localStorage.getItem('storedLib')) {
 
 function populateStorage() {
   localStorage.setItem('storedLib', JSON.stringify(myLibrary));
-  localStorage.setItem('storedPageCount', JSON.stringify(myLibrary));
+  localStorage.setItem('storedPageCount', JSON.stringify(pagereadNum));
   setStyles()
 }
 
 function setStyles() {
   myLibrary = JSON.parse(localStorage.getItem('storedLib'));
   pagereadNum = JSON.parse(localStorage.getItem('storedPageCount'));
+  pagesread.innerText = Number(pagereadNum);
   libraryDisplay() 
 }
 
