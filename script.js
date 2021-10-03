@@ -17,11 +17,13 @@ if (!localStorage.getItem('storedLib')) {
 
 function populateStorage() {
   localStorage.setItem('storedLib', JSON.stringify(myLibrary));
+  localStorage.setItem('storedPageCount', JSON.stringify(myLibrary));
   setStyles()
 }
 
 function setStyles() {
   myLibrary = JSON.parse(localStorage.getItem('storedLib'));
+  pagereadNum = JSON.parse(localStorage.getItem('storedPageCount'));
   libraryDisplay() 
 }
 
@@ -84,7 +86,7 @@ function libraryDisplay() {
         bookChangeRead.id = "changeread";
         newBook.appendChild(bookChangeRead).className = "changeread"; 
     });
-    pagesread.innerText = pagereadNum;
+    pagesread.innerText = Number(pagereadNum);
     localStorage.setItem('storedLib', JSON.stringify(myLibrary));
 }
 
@@ -123,6 +125,7 @@ addEventListener("click", function(e){
     
     if (e.target.parentNode.childNodes[3].innerText == "Read. ✅") {
       pagereadNum -= e.target.parentNode.childNodes[2].innerText;
+      localStorage.setItem('storedPageCount', JSON.stringify(pagereadNum));
     }
     
     myLibrary.splice(myLibIndex, 1);
@@ -134,10 +137,12 @@ addEventListener("click", function(e){
   if (e.target && e.target.classList.contains("changeread")) {
     if (e.target.parentNode.childNodes[3].innerText == "Read. ✅") {
       myLibrary[myLibIndex].read = "Not read. ❌";
-      pagereadNum -= Number(e.target.parentNode.childNodes[2].innerText);     
+      pagereadNum -= Number(e.target.parentNode.childNodes[2].innerText);
+      localStorage.setItem('storedPageCount', JSON.stringify(pagereadNum));     
     } else {
       myLibrary[myLibIndex].read = "Read. ✅";
-      pagereadNum += Number(e.target.parentNode.childNodes[2].innerText);  
+      pagereadNum += Number(e.target.parentNode.childNodes[2].innerText);
+      localStorage.setItem('storedPageCount', JSON.stringify(pagereadNum));  
     }
 
     libraryDisplay();
