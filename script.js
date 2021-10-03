@@ -6,6 +6,7 @@ const pagesread = document.getElementById("pagesread");
 
 let pagereadNum = 0;
 let myLibrary = [];
+let bookIdCount = 0;
 
 if (!localStorage.getItem('storedLib')) {
   populateStorage()
@@ -18,12 +19,14 @@ if (!localStorage.getItem('storedLib')) {
 function populateStorage() {
   localStorage.setItem('storedLib', JSON.stringify(myLibrary));
   localStorage.setItem('storedPageCount', JSON.stringify(pagereadNum));
+  localStorage.setItem('storedBookId', JSON.stringify(bookIdCount));
   setStyles()
 }
 
 function setStyles() {
   myLibrary = JSON.parse(localStorage.getItem('storedLib'));
   pagereadNum = JSON.parse(localStorage.getItem('storedPageCount'));
+  bookIdCount = JSON.parse(localStorage.getItem('storedBookId'));
   pagesread.innerText = Number(pagereadNum);
   libraryDisplay() 
 }
@@ -38,10 +41,10 @@ function Book(title, author, pages, read, id) {
   this.id = id
 }
 
-let bookIdCount = 0;
-
 function bookIdCreator() {
-  return ++bookIdCount;
+  ++bookIdCount
+  localStorage.setItem('storedBookId', JSON.stringify(bookIdCount))
+  return bookIdCount;
 }
 
 //function that displays each book on the dom.
@@ -101,6 +104,7 @@ bookform.addEventListener("submit", (e) => {
   
   if (bookPages > 0 && bookRead) {
     pagereadNum += Number(bookPages);
+    localStorage.setItem('storedPageCount', JSON.stringify(pagereadNum));
   }
 
   if(bookRead) {
